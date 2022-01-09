@@ -1,0 +1,60 @@
+{
+  "name": "@modernpoacher/hooks",
+  "version": "1.0.0",
+  "description": "Git Hooks",
+  "keywords": [
+    "git",
+    "hooks"
+  ],
+  "main": "./index.js",
+  "author": "Jonathan Perry for Modern Poacher Limited <modernpoacher@modernpoacher.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.13.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/modernpoacher/hooks"
+  },
+  "homepage": "https://github.com/modernpoacher/hooks",
+  "bugs": {
+    "url": "https://github.com/modernpoacher/hooks/issues"
+  },
+  "scripts": {
+    "prepublishOnly": "cross-env NODE_ENV=production npm run build",
+    "prebuild": "npm run clean",
+    "build": "npm run babel",
+    "build:watch": "npm run babel:watch",
+    "clean": "rimraf lib",
+    "babel": "babel src -d lib",
+    "babel:watch": "npm run babel -- -w",
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "gulp": "gulp --color",
+    "pre-commit": "npm run lint",
+    "post-commit": "cross-env DEBUG=@modernpoacher/hooks,@modernpoacher/hooks:* npm run gulp -- post-commit",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "debug": "^4.3.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.16.7",
+    "@babel/core": "^7.16.7",
+    "@babel/eslint-parser": "^7.16.5",
+    "@babel/preset-env": "^7.16.7",
+    "@babel/register": "^7.16.7",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "core-js": "^3.20.2",
+    "eslint": "7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-import-resolver-babel-module": "^5.3.1",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "5.2.0",
+    "gulp": "^4.0.2",
+    "husky": "^7.0.4",
+    "rimraf": "^3.0.2"
+  }
+}
