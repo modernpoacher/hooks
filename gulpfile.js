@@ -6,7 +6,7 @@ require('@babel/register')({
 
 const gulp = require('gulp')
 
-const postCommit = require('#hooks/post-commit')
+const postCommit = require('@modernpoacher/hooks/post-commit')
 
 gulp
   .task('post-commit', postCommit)
