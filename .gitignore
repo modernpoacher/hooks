@@ -1,5 +1,5 @@
-# Node modules
-/node_modules
+# Node
+node_modules
 
 # Mac
 .DS_Store
@@ -11,5 +11,5 @@
 # User-defined NVM configuration
 .nvmrc
 
-# Development
+# Deps
 .depsrc
