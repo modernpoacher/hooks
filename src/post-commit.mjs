@@ -3,12 +3,13 @@ import debug from 'debug'
 import {
   hasStagedChanges,
   getGitRemoteShowOriginHeadBranch,
+  getGitRevParseAbbrevRefHead,
   hasGitDiffHeadPackageVersionChanges,
   patchPackageVersion
 } from '#hooks/common'
 
-const log = debug('@modernpoacher/hooks:post-commit')
-const error = debug('@modernpoacher/hooks:post-commit:error')
+const log = debug('@modernpoacher/hooks/post-commit')
+const error = debug('@modernpoacher/hooks/post-commit:error')
 
 log('`@modernpoacher/hooks` is awake')
 
@@ -18,9 +19,13 @@ export default async function postCommit () {
   try {
     if (await hasStagedChanges()) return
 
-    if (await hasGitDiffHeadPackageVersionChanges(await getGitRemoteShowOriginHeadBranch())) return
+    const originHeadBranch = await getGitRemoteShowOriginHeadBranch()
 
-    await patchPackageVersion()
+    if (originHeadBranch === await getGitRevParseAbbrevRefHead()) {
+      if (await hasGitDiffHeadPackageVersionChanges(originHeadBranch)) return
+
+      await patchPackageVersion()
+    }
   } catch ({
     code = 'NONE',
     message = 'No error message defined'

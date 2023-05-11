@@ -4,7 +4,7 @@ import {
   exec
 } from 'child_process'
 
-const log = debug('@modernpoacher/hooks:common')
+const log = debug('@modernpoacher/hooks/common')
 
 log('`@modernpoacher/hooks` is awake')
 
@@ -23,7 +23,7 @@ export const NOT_STAGED_CHANGES = /Changes not staged for commit/s
 export const trim = (v = '') => String(v).split('\n').map((v) => v.trimEnd()).join('\n').trim()
 
 export function use (key) {
-  const log = debug(`@modernpoacher/hooks:${key}`)
+  const log = debug(`@modernpoacher/hooks/${key}`)
 
   return function use (v) {
     log(trim(v))
@@ -44,6 +44,24 @@ export function getGitRemoteShowOriginHeadBranch () {
 
       stdout.on('data', use('git-remote-show-origin-head-branch'))
       stderr.on('data', use('git-remote-show-origin-head-branch'))
+    })
+  )
+}
+
+export function getGitRevParseAbbrevRefHead () {
+  log('getGitRevParseAbbrevRefHead')
+
+  return (
+    new Promise((resolve, reject) => {
+      const command = 'git rev-parse --abbrev-ref HEAD'
+
+      const {
+        stdout,
+        stderr
+      } = exec(command, OPTIONS, (e, v) => (!e) ? resolve(trim(v)) : reject(e))
+
+      stdout.on('data', use('git-rev-parse-head'))
+      stderr.on('data', use('git-rev-parse-head'))
     })
   )
 }
