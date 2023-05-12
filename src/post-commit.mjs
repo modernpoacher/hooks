@@ -20,7 +20,6 @@ export default async function postCommit () {
     if (await hasStagedChanges()) return
 
     const originHeadBranch = await getGitRemoteShowOriginHeadBranch()
-
     if (originHeadBranch === await getGitRevParseAbbrevRefHead()) {
       if (await hasGitDiffHeadPackageVersionChanges(originHeadBranch)) return
 
