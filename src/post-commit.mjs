@@ -8,10 +8,17 @@ import {
   patchPackageVersion
 } from '#hooks/common'
 
-const log = debug('@modernpoacher/hooks/post-commit')
-const error = debug('@modernpoacher/hooks/post-commit:error')
+const log = debug('@modernpoacher/hooks:post-commit')
+const error = debug('@modernpoacher/hooks:post-commit:error')
 
 log('`@modernpoacher/hooks` is awake')
+
+function handleError ({
+  code = 'NONE',
+  message = 'NONE'
+}) {
+  error({ code, message })
+}
 
 export default async function postCommit () {
   log('postCommit')
@@ -25,10 +32,7 @@ export default async function postCommit () {
 
       await patchPackageVersion()
     }
-  } catch ({
-    code = 'NONE',
-    message = 'No error message defined'
-  }) {
-    error({ code, message })
+  } catch (e) { // @ts-expect-error
+    handleError(e)
   }
 }
