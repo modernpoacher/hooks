@@ -20,9 +20,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/modernpoacher/hooks.git"
+    "url": "git+https://github.com/modernpoacher/hooks.git"
   },
-  "homepage": "https://github.com/modernpoacher/hooks",
+  "homepage": "https://github.com/modernpoacher/hooks#readme",
   "bugs": {
     "url": "https://github.com/modernpoacher/hooks/issues"
   },
